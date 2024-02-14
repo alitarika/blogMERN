@@ -9,7 +9,7 @@ dotenv.config();
 const { PORT, MONGODBURL } = process.env;
 
 app.use(express.json());
-app.use("/", postsRoutes);
+app.use("/api/posts", postsRoutes);
 
 mongoose
   .connect(MONGODBURL)
@@ -19,4 +19,4 @@ mongoose
       console.log(`listening on ${PORT}`);
     });
   })
-  .catch((err) => console.error(err));
+  .catch((error) => console.error(error));
