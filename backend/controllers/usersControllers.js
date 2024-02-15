@@ -40,5 +40,36 @@ export const registerUser = async (req, res) => {
 };
 
 export const loginUser = async (req, res) => {
-  res.send("log");
+  // Parse username and pass from request body
+  const { username, password } = req.body;
+
+  // Check if username or password left blank.
+  if (!username || !password) {
+    res
+      .status(400)
+      .json({ error: "Both the username and password is required." });
+  }
+
+  // Check if a user with the username exists.
+  const user = await User.findOne({ username });
+  if (!user) {
+    return res.status(400).json({
+      error: "Incorrect username.",
+    });
+  }
+
+  // Destructure the hashed password in DB as hashedPassword
+  const { password: hashedPassword } = user;
+
+  // Check if password is correct.
+  const match = await bcrypt.compare(password, hashedPassword);
+  if (!match) {
+    return res.status(400).json({ error: "Incorrect password." });
+  }
+
+  try {
+    res.status(200).json({ username });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
