@@ -1,5 +1,6 @@
 import express from "express";
 import { postsRoutes } from "./routes/postsRoutes.js";
+import { usersRoutes } from "./routes/usersRoutes.js";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
@@ -10,6 +11,7 @@ const { PORT, MONGODBURL } = process.env;
 
 app.use(express.json());
 app.use("/api/posts", postsRoutes);
+app.use("/api/users", usersRoutes);
 
 mongoose
   .connect(MONGODBURL)
