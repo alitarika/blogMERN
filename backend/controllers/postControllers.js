@@ -32,6 +32,46 @@ export const addPost = async (req, res) => {
   }
 };
 
+// Update a blog post by ID.
+export const updatePost = async (req, res) => {
+  // Parse id from the url/request paramaters.
+  const { id } = req.params;
+  // Parse updated title and body
+  const { title, body } = req.body;
+
+  // Check if title or body left blank.
+  if (!title || !body) {
+    return res
+      .status(400)
+      .json({ error: "Both the blog title and the blog body is required." });
+  }
+
+  // Check whether or not ID is of valid type.
+  // If not return error.
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({
+      error: "No blog post is found with this ID. (ID is invalid type.)",
+    });
+  }
+
+  // Check whether the post with that ID exists.
+  const post = await Post.findById(id);
+  if (!post) {
+    return res
+      .status(400)
+      .json({ error: "No blog post is found with this ID." });
+  }
+
+  try {
+    await post.updateOne({ title, body });
+    return res.status(200).json({
+      success: `Post with the title '${title}' is updated.`,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 // Delete a blog post by ID.
 export const deletePost = async (req, res) => {
   // Parse id from the url/request paramaters.
