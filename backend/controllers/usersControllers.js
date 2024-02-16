@@ -1,10 +1,17 @@
 import bcrypt from "bcryptjs";
 import User from "../models/UserModel.js";
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
 
-/* 
-  IMPLEMENTED WITHOUT PASSWORD CONFIRMATION FOR SIMPLICITY REASONS.
-  IMPLEMENT PASS CONFIRMATION LATER.
-*/
+// initialize dotenv config and parse SECRET
+dotenv.config();
+const { SECRET } = process.env;
+
+// Create JWToken func
+// sign => 1.payload as obj 2.secret 3.options as obj
+const createToken = (id) => {
+  return jwt.sign({ id }, SECRET, { expiresIn: "7d" });
+};
 
 // Register User - Create user in DB
 export const registerUser = async (req, res) => {
