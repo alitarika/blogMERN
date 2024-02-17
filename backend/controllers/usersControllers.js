@@ -37,10 +37,12 @@ export const registerUser = async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
 
-  // Create user
   try {
+    // Create user
     const user = await User.create({ username, password: hashedPassword });
-    res.status(200).json({ username });
+    // Create JWT and send as 200 response
+    const token = createToken(user._id);
+    res.status(200).json({ username, token });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -75,7 +77,9 @@ export const loginUser = async (req, res) => {
   }
 
   try {
-    res.status(200).json({ username });
+    // Create JWT and send as 200 response
+    const token = createToken(user._id);
+    res.status(200).json({ username, token });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
