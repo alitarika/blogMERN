@@ -1,11 +1,27 @@
 import mongoose from "mongoose";
 import Post from "../models/PostModel.js";
+import User from "../models/UserModel.js";
 
 // Get *all* blog posts.
 export const getPosts = async (req, res) => {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find().sort({ createdAt: "desc" });
     res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Get user's blog posts.
+export const getUserPosts = async (req, res) => {
+  // Parse authenticated user from req.user (check auth.js)
+  const user = await User.findById(req.user._id);
+
+  try {
+    const userPosts = await Post.find({ user_id: user._id }).sort({
+      createdAt: "desc",
+    });
+    res.status(200).json(userPosts);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -23,9 +39,12 @@ export const addPost = async (req, res) => {
       .json({ error: "Both the blog title and the blog body is required." });
   }
 
+  // Parse authenticated user from req.user (check auth.js)
+  const user = await User.findById(req.user._id);
+
   // Crate post. If not successfully sent to the DB give server error.
   try {
-    const post = await Post.create({ title, body });
+    const post = await Post.create({ user_id: user._id, title, body });
     res.status(200).json({ success: "Post is successfully created.", post });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -62,6 +81,14 @@ export const updatePost = async (req, res) => {
       .json({ error: "No blog post is found with this ID." });
   }
 
+  // Check whether the user owns the post
+  const user = await User.findById(req.user._id);
+  if (!post.user_id.equals(user._id)) {
+    return res.status(401).json({
+      error: "Not authorized to modify the post since the post is not yours.",
+    });
+  }
+
   try {
     await post.updateOne({ title, body });
     return res.status(200).json({
@@ -91,6 +118,14 @@ export const deletePost = async (req, res) => {
     return res
       .status(400)
       .json({ error: "No blog post is found with this ID." });
+  }
+
+  // Check whether the user owns the post
+  const user = await User.findById(req.user._id);
+  if (!post.user_id.equals(user._id)) {
+    return res.status(401).json({
+      error: "Not authorized to modify the post since the post is not yours.",
+    });
   }
 
   // Parse title for verbose response. Delete post. Catch error if any.
