@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .nav-link {
+    @apply text-xl size-10 rounded-md text-pr-950 hover:text-pr-999 hover:bg-pr-600 grid place-content-center;
+  }
+}
