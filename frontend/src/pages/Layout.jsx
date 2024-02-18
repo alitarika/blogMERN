@@ -14,7 +14,7 @@ const Layout = () => {
             ></Link>
             <Link
               to="/register"
-              className="fa-solid fa-user-plus  nav-link"
+              className="fa-solid fa-user-plus nav-link"
             ></Link>
           </div>
         </nav>

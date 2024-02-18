@@ -6,4 +6,16 @@
   .nav-link {
     @apply text-xl size-10 rounded-md text-pr-950 hover:text-pr-999 hover:bg-pr-600 grid place-content-center;
   }
+  .card {
+    @apply bg-white p-4 rounded-lg shadow-lg;
+  }
+  .title {
+    @apply font-bold mb-6;
+  }
+  .input {
+    @apply block w-full rounded-md p-2 placeholder:text-sm border-0 outline-0 ring-1 ring-pr-500 focus:ring-2 mb-4;
+  }
+  .btn {
+    @apply block w-full bg-pr-500 text-white rounded-md p-2 active:bg-pr-600;
+  }
 }
