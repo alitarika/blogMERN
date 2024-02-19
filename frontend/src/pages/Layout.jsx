@@ -5,7 +5,7 @@ const Layout = () => {
   return (
     <>
       <header className="bg-pr-500">
-        <nav className="flex items-center justify-between p-4">
+        <nav className="flex items-center justify-between px-4 py-2">
           <Link
             title="Home"
             to="/"
@@ -26,7 +26,7 @@ const Layout = () => {
         </nav>
       </header>
 
-      <main className="p-4">
+      <main className="px-4 py-8">
         <Outlet />
       </main>
     </>

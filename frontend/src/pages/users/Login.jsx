@@ -1,8 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Alert from "../../components/Alert";
 import { loginUser } from "../../controllers/usersController";
+import { UserContext } from "../../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  // Consume/use user context
+  const { setUser } = useContext(UserContext);
+
+  // useNavigate hook
+  const navigate = useNavigate();
+
   // Error state
   const [error, setError] = useState(null);
 
@@ -16,6 +24,9 @@ const Login = () => {
 
     try {
       await loginUser(username, password);
+      setUser({ username, posts: [] });
+      // Navigate to dashboard
+      navigate("/dashboard");
     } catch (error) {
       setError(error.message);
     }
@@ -29,6 +40,7 @@ const Login = () => {
           className="input"
           type="text"
           autoFocus
+          autoComplete="username"
           placeholder="Username"
           name="username"
           id="username"

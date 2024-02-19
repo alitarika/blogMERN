@@ -7,7 +7,7 @@
     @apply text-xl size-10 rounded-md text-pr-950 hover:text-pr-999 hover:bg-pr-600 grid place-content-center;
   }
   .card {
-    @apply bg-zinc-50 p-4 rounded-lg shadow-lg max-w-[640px] mx-auto;
+    @apply bg-zinc-50 p-6 px-8 rounded-lg shadow-lg max-w-[640px] mx-auto;
   }
   .title {
     @apply font-bold mb-6;
