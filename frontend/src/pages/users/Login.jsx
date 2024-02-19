@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Alert from "../../components/Alert";
+import { loginUser } from "../../controllers/usersController";
 
 const Login = () => {
   // Error state
@@ -10,8 +11,14 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   // Handle Login Submit
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      await loginUser(username, password);
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   return (
