@@ -12,7 +12,7 @@ const UserProvider = ({ children }) => {
     posts: [],
   });
 
-  // Return a custom component to expose User state to the children components
+  // Custom provider wrapper for user context
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {children}
