@@ -1,6 +1,8 @@
+export const BaseURL = "https://blog-mern-backend-kohl.vercel.app";
+
 // Get *all* posts
 export const getPosts = async () => {
-  const res = await fetch("/api/posts");
+  const res = await fetch(`${BaseURL}/api/posts`);
   const data = await res.json();
 
   if (!res.ok) {
@@ -12,7 +14,7 @@ export const getPosts = async () => {
 
 // Get user posts
 export const getUserPosts = async () => {
-  const res = await fetch("/api/posts/user", {
+  const res = await fetch(`${BaseURL}/api/posts/user`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
@@ -33,7 +35,7 @@ export const createPost = async (title, body) => {
     throw Error("All fields are required");
   }
 
-  const res = await fetch("/api/posts", {
+  const res = await fetch(`${BaseURL}/api/posts`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -53,7 +55,7 @@ export const createPost = async (title, body) => {
 
 // Delete Post
 export const deletePost = async (id) => {
-  const res = await fetch(`/api/posts/${id}`, {
+  const res = await fetch(`${BaseURL}/api/posts/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -75,7 +77,7 @@ export const updatePost = async (id, title, body) => {
     throw Error("All fields are required");
   }
 
-  const res = await fetch(`/api/posts/${id}`, {
+  const res = await fetch(`${BaseURL}/api/posts/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
