@@ -93,6 +93,7 @@ export const updatePost = async (req, res) => {
     await post.updateOne({ title, body });
     return res.status(200).json({
       success: `Post with the title '${title}' is updated.`,
+      post,
     });
   } catch (error) {
     res.status(500).json({ error: error.message });

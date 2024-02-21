@@ -52,8 +52,8 @@ export const createPost = async (title, body) => {
 };
 
 // Delete Post
-export const deletePost = async (_id) => {
-  const res = await fetch(`/api/posts/${_id}`, {
+export const deletePost = async (id) => {
+  const res = await fetch(`/api/posts/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -70,12 +70,12 @@ export const deletePost = async (_id) => {
 };
 
 // Modify/update post
-export const updatePost = async (_id, title, body) => {
+export const updatePost = async (id, title, body) => {
   if (!title || !body) {
     throw Error("All fields are required");
   }
 
-  const res = await fetch(`/api/posts/${_id}`, {
+  const res = await fetch(`/api/posts/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

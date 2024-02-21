@@ -4,6 +4,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { Link } from "react-router-dom";
 import Post from "../../components/Post";
 import Alert from "../../components/Alert";
+import Success from "../../components/Success";
 
 const Dashboard = () => {
   // Consume/use user context
@@ -27,21 +28,20 @@ const Dashboard = () => {
       setLoading(false);
     }, 300);
   }, []);
-  console.log(user);
 
   // Handle delete post
-  const handleDelete = async (_id) => {
+  const handleDelete = async (id) => {
     if (confirm("Confirm delete?")) {
       try {
         // Delete the post
-        const data = await deletePost(_id);
+        const data = await deletePost(id);
         // 200 res -> success: `Post with the title '${title}' is deleted.`,
         setSuccess(data.success);
       } catch (error) {
         setError(error.message);
       }
 
-      const newPosts = user.posts.filter((post) => post._id !== _id);
+      const newPosts = user.posts.filter((post) => post._id !== id);
       setUser({ ...user, posts: newPosts });
     }
   };
@@ -52,6 +52,9 @@ const Dashboard = () => {
       {loading && (
         <i className="fa-solid fa-spinner animate-spin text-4xl text-center block"></i>
       )}
+
+      {success && <Success message={success} />}
+      {error && <Alert message={error.message} />}
 
       {user.posts.map((post) => (
         <div key={post._id}>
