@@ -6,6 +6,8 @@ import Dashboard from "./pages/users/Dashboard";
 import Home from "./pages/posts/Home";
 import CreatePost from "./pages/posts/CreatePost";
 import UpdatePost from "./pages/posts/UpdatePost";
+import AuthRoutes from "./routes/AuthRoutes";
+import GuestRoutes from "./routes/GuestRoutes";
 
 const App = () => {
   return (
@@ -13,11 +15,15 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="create" element={<CreatePost />} />
-          <Route path="update" element={<UpdatePost />} />
+          <Route element={<AuthRoutes />}>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="create" element={<CreatePost />} />
+            <Route path="update" element={<UpdatePost />} />
+          </Route>
+          <Route element={<GuestRoutes />}>
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
