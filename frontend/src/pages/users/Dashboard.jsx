@@ -7,6 +7,11 @@ import Alert from "../../components/Alert";
 import Success from "../../components/Success";
 
 const Dashboard = () => {
+  // Set html title on the first render of page/ on mount
+  useEffect(() => {
+    document.title = `${user.username}'s Dashboard`;
+  }, []);
+
   // Consume/use user context
   const { user, setUser } = useContext(UserContext);
 

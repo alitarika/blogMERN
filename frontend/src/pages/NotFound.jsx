@@ -1,6 +1,12 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const NotFound = () => {
+  // Set html title on the first render of page/ on mount
+  useEffect(() => {
+    document.title = "404 Not Found";
+  }, []);
+
   return (
     <>
       <Link to="/" className=" text-pr-900 hover:text-pr-700">

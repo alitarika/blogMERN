@@ -1,10 +1,15 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../../controllers/postsController.js";
 import { PostContext } from "../../contexts/PostContext";
 import Alert from "../../components/Alert";
 
 const CreatePost = () => {
+  // Set html title on the first render of page/ on mount
+  useEffect(() => {
+    document.title = "Create a Blog Post";
+  }, []);
+
   // Consume/use post context
   const { posts, setPosts } = useContext(PostContext);
 
@@ -32,7 +37,7 @@ const CreatePost = () => {
 
   return (
     <section className="card">
-      <h1 className="title">Create Post</h1>
+      <h1 className="title">Create a Blog Post</h1>
       <form onSubmit={handleCreate}>
         <input
           type="text"

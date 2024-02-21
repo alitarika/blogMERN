@@ -4,6 +4,11 @@ import { PostContext } from "../../contexts/PostContext";
 import Post from "../../components/Post";
 
 const Home = () => {
+  // Set html title on the first render of page/ on mount
+  useEffect(() => {
+    document.title = "Homepage";
+  }, []);
+
   // consume/use post context
   const { posts, setPosts } = useContext(PostContext);
 

@@ -1,10 +1,15 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { updatePost } from "../../controllers/postsController.js";
 import { PostContext } from "../../contexts/PostContext";
 import Alert from "../../components/Alert";
 
 const UpdatePost = () => {
+  // Set html title on the first render of page/ on mount
+  useEffect(() => {
+    document.title = `Modify Post '${title}'`;
+  }, []);
+
   // Consume/use post context
   const { posts, setPosts } = useContext(PostContext);
 

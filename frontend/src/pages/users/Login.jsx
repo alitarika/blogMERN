@@ -1,10 +1,15 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import Alert from "../../components/Alert";
 import { loginUser } from "../../controllers/usersController";
 import { UserContext } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  // Set html title on the first render of page/ on mount
+  useEffect(() => {
+    document.title = "Log In";
+  }, []);
+
   // Consume/use user context
   const { setUser } = useContext(UserContext);
 
